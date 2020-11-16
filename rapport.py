@@ -602,6 +602,7 @@ if __name__ == "__main__" :
 
 """Display the 10 image from train set and 10 images from validation set, print their ground truth"""
 
+if __name__ == "__main__" :
 def display_10_images(dataset):
     # YOUR CODE HERE 
     for i in range(0,10):
