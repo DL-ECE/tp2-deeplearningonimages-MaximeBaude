@@ -599,15 +599,14 @@ if __name__ == "__main__" :
   fmnist_train = DataLoader(fmnist_train, batch_size=32, num_workers=4, pin_memory=True)
   fmnist_val = FashionMNIST(os.getcwd(), train=False, download=True, transform=transforms.ToTensor())
   fmnist_val = DataLoader(fmnist_val, batch_size=32, num_workers=4,  pin_memory=True)
-
   def display_10_images(dataset):
-    # YOUR CODE HERE 
-    for i in range(0,10):
-        print("target: ",dataset.targets[i])
+      # YOUR CODE HERE 
+      for i in range(0,10):
+        plt.figure(i)
         plot_one_tensor(dataset.data[i,:,:])
-        plt.show()
-
-display_10_images(fmnist_train.dataset)
+      plt.show()
+  display_10_images(fmnist_train.dataset)
+  display_10_images(fmnist_val.dataset)
 
 """Display the 10 image from train set and 10 images from validation set, print their ground truth"""
 
@@ -619,11 +618,12 @@ What are the different classes
 """
 
 def fashion_mnist_dataset_answer():
-    shape = (28,28)  # replace None with the value you found
+    shape = [28 ,28]  # replace None with the value you found
     number_of_images_in_train_set = 60000
     number_of_images_in_test_set = 10000
     number_of_classes = 10
     return {'shape': shape, 'nb_in_train_set': number_of_images_in_train_set, 'nb_in_test_set': number_of_images_in_test_set, 'number_of_classes': number_of_classes}
+pass
 
 # Plot an image and the target  
 data = FashionMNIST(os.getcwd(), train=True, download=True)
