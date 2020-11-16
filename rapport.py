@@ -175,22 +175,30 @@ We can use the same function from TP-1
 def normalize_tensor(input_tensor: torch.Tensor) -> torch.Tensor:
     """Apply a normalization to the tensor"""
     # YOUR CODE HERE
+    if(type(input_tensor) != torch.Tensor):
+      input_tensor = torch.from_numpy(input_tensor.astype(np.float32))
     return input_tensor/255
 
 def sigmoid(input_tensor: torch.Tensor) -> torch.Tensor:
     """Apply a sigmoid to the input Tensor"""
     # YOUR CODE HERE
+    if(type(input_tensor) != torch.Tensor):
+      input_tensor = torch.from_numpy(input_tensor.astype(np.float32))
     sig = torch.sigmoid(input_tensor)
     return sig
 
 def softmax(input_tensor: torch.Tensor)-> torch.Tensor:
     """Apply a softmax to the input tensor"""
-    # YOUR CODE HERE 
+    # YOUR CODE HERE
+    if(type(input_tensor) != torch.Tensor):
+      input_tensor = torch.from_numpy(input_tensor.astype(np.float32)) 
     return torch.nn.functional.softmax(input_tensor, dim=1)
 
 def target_to_one_hot(targets: torch.Tensor,num_classes=10) -> torch.Tensor:
     """Create the one hot representation of the target""" 
     # YOUR CODE HERE 
+    if(type(input_tensor) != torch.Tensor):
+      input_tensor = torch.from_numpy(input_tensor.astype(np.float32))
     one_hot_matrix = torch.zeros([targets.shape[0], num_classes], dtype=torch.float32)
     
     for i in range(targets.shape[0]):
@@ -594,6 +602,7 @@ if __name__ == "__main__" :
 
 """Display the 10 image from train set and 10 images from validation set, print their ground truth"""
 
+if __name__ == "__main__" :
 def display_10_images(dataset):
     # YOUR CODE HERE 
     for i in range(0,10):
