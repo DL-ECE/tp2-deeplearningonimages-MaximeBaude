@@ -603,14 +603,14 @@ if __name__ == "__main__" :
 """Display the 10 image from train set and 10 images from validation set, print their ground truth"""
 
 if __name__ == "__main__" :
-def display_10_images(dataset):
-    # YOUR CODE HERE 
-    for i in range(0,10):
-        print("target: ",dataset.targets[i])
-        plot_one_tensor(dataset.data[i,:,:])
-        plt.show()
+  def display_10_images(dataset):
+      # YOUR CODE HERE 
+      for i in range(0,10):
+          print("target: ",dataset.targets[i])
+          plot_one_tensor(dataset.data[i,:,:])
+          plt.show()
 
-display_10_images(fmnist_train.dataset)
+  display_10_images(fmnist_train.dataset)
 
 """What is the shape of each images
 How many images do we have
