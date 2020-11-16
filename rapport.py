@@ -197,7 +197,7 @@ def softmax(input_tensor: torch.Tensor)-> torch.Tensor:
 def target_to_one_hot(targets: torch.Tensor,num_classes=10) -> torch.Tensor:
     """Create the one hot representation of the target""" 
     # YOUR CODE HERE 
-    if(type(input_tensor) != torch.Tensor):
+    if(type(targets) != torch.Tensor):
       input_tensor = torch.from_numpy(input_tensor.astype(np.float32))
     one_hot_matrix = torch.zeros([targets.shape[0], num_classes], dtype=torch.float32)
     
@@ -503,6 +503,7 @@ R_0 = np.array([[0,0,0,0,0],
                 [18,237,163,119,53],
                 [90,89,178,75,247],
                 [209,216,48,135,232]])
+print(R_0)
 
 """What is the result of convolution of $ I_0 \ast K_1 $"""
 
@@ -512,6 +513,7 @@ R_1 = np.array([[1005,-173,46,-280,513],
                 [280,390,1010,295,1040],
                 [942,1048,316,740,1154],
                 [1570,738,934,945,1477]])
+print(R_1)
 
 """## 2) Computation using __numpy__
 
@@ -533,9 +535,8 @@ def convolution_forward_numpy(image, kernel):
 
 """Test your implementation on the two previous example and compare the results to the result manually computed."""
 
-assert convolution_forward_numpy(I, K_0).all() == R_0.all()
-assert convolution_forward_numpy(I, K_1).all() == R_1.all()
-convolution_forward_numpy(I,K_1)
+assert (convolution_forward_numpy(I, K_0) == R_0).all()
+assert (convolution_forward_numpy(I, K_1) == R_1).all()
 
 """Display the result image of the convolution"""
 
@@ -567,15 +568,11 @@ Now let's use pytorch convolution layer to do the forward pass. Use the document
 
 def convolution_forward_torch(image, kernel):
     # YOUR CODE HERE
-    conv = nn.Conv2d(1, 1, kernel_size=(kernel.shape), stride=1, padding=1)
-    conv.weight[:] = torch.from_numpy(kernel).float()
+    my_image = torch.Tensor(image.reshape(1 ,1 ,image.shape[1], image.shape[0]))
+    my_kernel = torch.Tensor(kernel.reshape(1, 1, kernel.shape[1], kernel.shape[0]))
+    convolution = F.conv2d(my_image, my_kernel, padding = 1, groups = 1).numpy().astype(int).reshape(my_image.shape[2], my_image.shape[3])
 
-    image = image.reshape(1, 1, image.shape[0], image.shape[1])
-    image = torch.from_numpy(image).float()
-
-    out = conv(image)
-
-    return out
+    return convolution
 
 """In pytorch you can also access other layer like convolution2D, pooling layers, for example in the following cell use the __torch.nn.MaxPool2d__ to redduce the image size."""
 
@@ -623,7 +620,6 @@ def fashion_mnist_dataset_answer():
     number_of_images_in_test_set = 10000
     number_of_classes = 10
     return {'shape': shape, 'nb_in_train_set': number_of_images_in_train_set, 'nb_in_test_set': number_of_images_in_test_set, 'number_of_classes': number_of_classes}
-pass
 
 # Plot an image and the target  
 data = FashionMNIST(os.getcwd(), train=True, download=True)
